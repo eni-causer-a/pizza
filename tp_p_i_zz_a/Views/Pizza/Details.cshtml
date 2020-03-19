@@ -1,0 +1,13 @@
+﻿@model BO.Pizza
+
+<div>
+    <h4>Pizza</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @Html.Partial("_Pizza", Model)
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
