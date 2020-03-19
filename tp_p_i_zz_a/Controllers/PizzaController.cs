@@ -103,15 +103,47 @@ namespace tp_p_i_zz_a.Controllers
         {
             try
             {
- 
-
-                pizza.Pate = getPateById(pizza.Pate.Id);
-                foreach (var ingredient in pizza.SelectedIngredients)
+                if (ModelState.IsValid)
                 {
-                    pizza.Ingredients.Add(listIngredient.FirstOrDefault(i => i.Id.ToString() == ingredient));
+                    
+                    
+
+                    if (pizza.SelectedIngredients.Count < 2 || pizza.SelectedIngredients.Count > 5 )
+                    {
+                        ModelState.AddModelError("", "Il  faut entre 2 et 5 ingrédients");
+                        return View();
+                        }
+
+                    if(ListePizzas.Any(p=> p.Nom == pizza.Nom))
+                    {
+                        ModelState.AddModelError("", "Nom dejà existant");
+                        return View();
+                    }
+                    
+                    pizza.Id = ListePizzas.Count();
+                    pizza.Pate = getPateById(pizza.Pate.Id);
+                    foreach (var ingredient in pizza.SelectedIngredients)
+                    {
+                        pizza.Ingredients.Add(listIngredient.FirstOrDefault(i => i.Id.ToString() == ingredient));
+                    }
+                    foreach (var p in ListePizzas)
+                    {
+                        if (Pizza.compareIngredients(p.Ingredients, pizza.Ingredients))
+                        {
+                            ModelState.AddModelError("", "Combionaison d'ingrédient déjà existante");
+                            return View();
+                        }
+                    }
+                    ListePizzas.Add(pizza);
+                    return RedirectToAction("Index");
                 }
-                ListePizzas.Add(pizza);
-                return RedirectToAction("Index");
+                else
+                {
+                    return View();
+                }
+
+
+                    
             }
             catch
             {

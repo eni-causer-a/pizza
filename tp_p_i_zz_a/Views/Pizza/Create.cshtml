@@ -27,13 +27,15 @@
 
         </div>
         @Html.LabelFor(model => model.Pate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Pate.Id, listPates.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Nom }))
-        </div>
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.Pate.Id, listPates.Select(model => new SelectListItem { Value = model.Id.ToString(), Text = model.Nom }))
+        @Html.ValidationMessageFor(model => model.Pate, "", new { @class = "text-danger" })
+    </div>
         @Html.LabelFor(model => model.Ingredients, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.ListBoxFor(model => model.SelectedIngredients, listIngredient.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.Nom }))
-        </div>+
+    <div class="col-md-10">
+        @Html.ListBoxFor(model => model.SelectedIngredients, listIngredient.Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.Nom }))
+        @Html.ValidationMessageFor(model => model.Ingredients, "", new { @class = "text-danger" })
+    </div>+
     </div>
 
         <div class="form-group">
